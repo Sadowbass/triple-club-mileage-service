@@ -56,15 +56,15 @@
 ## API 명세서
 
 ### `POST /events`
-#### 리뷰를 작성이 이뤄질때마다 발생하는 API입니다.
+#### 리뷰 작성이 이뤄질때마다 발생하는 API 입니다.
 
 | Method | Path    | Content-Type     |
 | :----: | :---:   | :----------:     |
 | POST   | /events | application/json |  
  
-`Request Data`
+`Request Data (HTTP body)`
 
-| field name       | type       | required | values           | description                                 | 
+| field name       | data type  | required | values           | description                                 | 
 | :----:           | :----:     | :----:   | :----:           | :-----:                                     |
 | type             | string     | true     | REVIEW           | 이벤트의 종류를 정합니다                    |
 | action           | string     | true     | ADD, MOD, DELETE | 이벤트의 동작을 정합니다                    |
@@ -74,16 +74,244 @@
 | userId           | UUID       | true     | -                | 리뷰를 작성한 사용자의 UUID 형식의 ID입니다 |
 | placeId          | UUID       | true     | -                | 리뷰를 작성한 장소의 UUID 형식의 ID입니다   |
 
-`Response Data`  
+`Response Data (success)`  
 
-| field name        | type       | required | values           | description                                        |
-| :----:            | :----:     | :----:   | :----:           | :-----:                                            |
-| rspCode           | number     | true     | -                | 응답상태에 대한 코드입니다                         |
-| rspMessage        | string     | true     | -                | 응답상태에 대한 메세지 입니다                      |
-| result            | object     | true     | -                | 사용자의 마일리지 정보를 담은 object 입니다        |       
-| * userId          | UUID       | true     | -                | 사용자의 UUID 형식의 ID입니다                      |
-| * numberOfReviews | number     | true     | -                | 사용자가 작성한 리뷰의 숫자입니다                  |       
-| * mileage         | number     | true     | -                | 사용자의 현재 총 마일리지입니다                    |
-| * detailPath      | URI        | true     | -                | 사용자 마일리지 상세항목을 요청하는 API 경로입니다 |
+| field name        | type       | required | description                                        |
+| :----:            | :----:     | :----:   | :-----:                                            |
+| rspCode           | number     | true     | 응답상태에 대한 코드입니다                         |
+| rspMessage        | string     | true     | 응답상태에 대한 메세지 입니다                      |
+| result            | object     | true     | 사용자의 마일리지 정보를 담은 object 입니다        |       
+| * userId          | UUID       | true     | 사용자의 UUID 형식의 ID입니다                      |
+| * numberOfReviews | number     | true     | 사용자가 작성한 리뷰의 숫자입니다                  |       
+| * mileage         | number     | true     | 사용자의 현재 총 마일리지입니다                    |
+| * detailPath      | URI        | true     | 사용자 마일리지 상세항목을 요청하는 API 경로입니다 |
 
+`Response Data (Failed)`  
 
+| field name        | type       | required | description                                        |
+| :----:            | :----:     | :----:   | :-----:                                            |
+| rspCode           | number     | true     | 응답상태에 대한 코드입니다                         |
+| rspMessage        | string     | true     | 응답상태에 대한 메세지 입니다                      |
+
+`Request Example`
+
+```json
+{
+   "type": "REVIEW",
+   "action": "ADD", 
+   "reviewId": "240a0658-dc5f-4878-9381-ebb7b2667772",
+   "content": "좋아요!",
+   "attachedPhotoIds": [
+      "e4d1a64e-a531-46de-88d0-ff0ed70c0bb8",
+      "afb0cef2-851d-4a50-bb07-9cc15cbdc332"
+   ],
+   "userId": "3ede0ef2-92b7-4817-a5f3-0c575361f745",
+   "placeId": "2e4baf1c-5acb-4efb-a1af-eddada31b00f"
+}
+```
+
+`Response Example`
+
+```json
+{
+   "rspCode": 0,
+   "rspMessage": "Request Success.",
+   "result": {
+      "userId": "3ede0ef2-92b7-4817-a5f3-0c575361f745",
+      "numberOfReviews": 1,
+      "mileage": 2,
+      "detailPath": "/mileage/3ede0ef2-92b7-4817-a5f3-0c575361f745/details?pageNum=1"
+   }
+}
+```
+
+<br>
+
+### `GET /mileage/{userId}`
+#### 사용자의 현재 보유중인 총 마일리지를 조회합니다.
+
+| Method | Path              | Content-Type     |
+| :----: | :---:             | :----------:     |
+| GET    | /mileage/{userId} | -                |  
+
+`Request Data`
+
+| field name       | type       | required | values           | description                                 | 
+| :----:           | :----:     | :----:   | :----:           | :-----:                                     |
+| userId           | UUID       | true     | -                | 사용자의 UUID 형식의 ID입니다 (path var)    |
+
+`Response Data (success)`
+
+| field name        | type       | required | description                                        |
+| :----:            | :----:     | :----:   | :-----:                                            |
+| rspCode           | number     | true     | 응답상태에 대한 코드입니다                         |
+| rspMessage        | string     | true     | 응답상태에 대한 메세지 입니다                      |
+| result            | object     | true     | 사용자의 마일리지 정보를 담은 object 입니다        |       
+| * userId          | UUID       | true     | 사용자의 UUID 형식의 ID입니다                      |
+| * numberOfReviews | number     | true     | 사용자가 작성한 리뷰의 숫자입니다                  |       
+| * mileage         | number     | true     | 사용자의 현재 총 마일리지입니다                    |
+| * detailPath      | URI        | true     | 사용자 마일리지 상세항목을 요청하는 API 경로입니다 |
+
+`Response Data (Failed)`
+
+| field name        | type       | required | description                                        |
+| :----:            | :----:     | :----:   | :-----:                                            |
+| rspCode           | number     | true     | 응답상태에 대한 코드입니다                         |
+| rspMessage        | string     | true     | 응답상태에 대한 메세지 입니다                      |
+
+`Request Example`
+
+`https://localhost:8080/mileage/3ede0ef2-92b7-4817-a5f3-0c575361f745`
+
+`Response Example`
+
+```json
+{
+   "rspCode": 0,
+   "rspMessage": "Request Success.",
+   "result": {
+      "userId": "3ede0ef2-92b7-4817-a5f3-0c575361f745",
+      "numberOfReviews": 0,
+      "mileage": 0,
+      "detailPath": "/mileage/3ede0ef2-92b7-4817-a5f3-0c575361f745/details?pageNum=1"
+   }
+}
+```
+
+### `GET /mileage/{userId}/details`
+#### 사용자의 마일리지 적립 이력을 조회합니다 (삭제한 리뷰의 마일리지 이력 포함)
+
+| Method | Path                      | Content-Type     |
+| :----: | :---:                     | :----------:     |
+| GET    | /mileage/{userId}/details | -                |
+
+`Request Data`
+
+| field name       | type       | required | values           | description                                        | 
+| :----:           | :----:     | :----:   | :----:           | :-----:                                            |
+| userId           | UUID       | true     | -                | 사용자의 UUID 형식의 ID입니다 (path var)           |
+| pageNum          | number     | false    | -                | 상세확인 페이지 번호입니다. (parameter, 기본값 1)  |
+| order            | string     | false    | asc, desc        | 등록일자 정렬방식입니다. (parameter, 기본값 desc)  |
+
+`Response Data (success)`
+
+| field name        | type         | required | description                                        |
+| :----:            | :----:       | :----:   | :-----:                                            |
+| rspCode           | number       | true     | 응답상태에 대한 코드입니다                         |
+| rspMessage        | string       | true     | 응답상태에 대한 메세지 입니다                      |
+| result            | object       | true     | 사용자의 마일리지 상세 정보를 담은 object 입니다   |       
+| * userId          | UUID         | true     | 사용자의 UUID 형식의 ID입니다                      |
+| * currentPage     | number       | true     | 마일리지 상세보기의 현재 페이지입니다              |       
+| * lastPage        | number       | true     | 사용자 마일리지 최종페이지 번호입니다              |
+| * totalCount      | number       | true     | 마일리지 변동이력 총 건수입니다                    |
+| * details         | list<object> | false    | 마일리지 상세내역 입니다                           |
+| ** reviewId       | UUID         | true     | 이벤트가 발생한 리뷰의 id입니다                    |
+| ** eventAction    | string       | true     | 이벤트의 동작입니다                                |
+| ** changedMileage | number       | true     | 변동된 마일리지 입니다                             |
+| ** reason         | string       | true     | 변동된 사유입니다                                  |
+| ** createdAt      | datetime     | true     | 변동된 일시입니다.                                 |
+
+`Response Data (Failed)`
+
+| field name        | type       | required | description                                        |
+| :----:            | :----:     | :----:   | :-----:                                            |
+| rspCode           | number     | true     | 응답상태에 대한 코드입니다                         |
+| rspMessage        | string     | true     | 응답상태에 대한 메세지 입니다                      |
+
+`Request Example`
+
+`localhost:8080/mileage/3ede0ef2-92b7-4817-a5f3-0c575361f745/details?pageNum=1&order=desc`
+
+`Response Example`
+
+```json
+{
+   "rspCode": 0,
+   "rspMessage": "Request Success.",
+   "result": {
+      "userId": "3ede0ef2-92b7-4817-a5f3-0c575361f745",
+      "currentPage": 0,
+      "lastPage": 1,
+      "totalCount": 11,
+      "details": [
+         {
+            "reviewId": "240a0658-dc5f-4878-9381-ebb7b2667772",
+            "eventAction": "MOD",
+            "changedMileage": -1,
+            "reason": "photo",
+            "createdAt": "2022-12-20 21:03:25"
+         },
+         {
+            "reviewId": "240a0658-dc5f-4878-9381-ebb7b2667772",
+            "eventAction": "MOD",
+            "changedMileage": -1,
+            "reason": "content",
+            "createdAt": "2022-12-20 21:03:24"
+         },
+         {
+            "reviewId": "240a0658-dc5f-4878-9381-ebb7b2667772",
+            "eventAction": "MOD",
+            "changedMileage": 1,
+            "reason": "content",
+            "createdAt": "2022-12-20 21:03:22"
+         },
+         {
+            "reviewId": "240a0658-dc5f-4878-9381-ebb7b2667772",
+            "eventAction": "MOD",
+            "changedMileage": 1,
+            "reason": "photo",
+            "createdAt": "2022-12-20 21:03:21"
+         },
+         {
+            "reviewId": "240a0658-dc5f-4878-9381-ebb7b2667772",
+            "eventAction": "MOD",
+            "changedMileage": -1,
+            "reason": "photo",
+            "createdAt": "2022-12-20 21:03:21"
+         },
+         {
+            "reviewId": "240a0658-dc5f-4878-9381-ebb7b2667772",
+            "eventAction": "MOD",
+            "changedMileage": -1,
+            "reason": "content",
+            "createdAt": "2022-12-20 21:03:20"
+         },
+         {
+            "reviewId": "240a0658-dc5f-4878-9381-ebb7b2667772",
+            "eventAction": "MOD",
+            "changedMileage": 1,
+            "reason": "content",
+            "createdAt": "2022-12-20 21:03:19"
+         },
+         {
+            "reviewId": "240a0658-dc5f-4878-9381-ebb7b2667772",
+            "eventAction": "MOD",
+            "changedMileage": 1,
+            "reason": "photo",
+            "createdAt": "2022-12-20 21:03:18"
+         },
+         {
+            "reviewId": "240a0658-dc5f-4878-9381-ebb7b2667772",
+            "eventAction": "MOD",
+            "changedMileage": -1,
+            "reason": "photo",
+            "createdAt": "2022-12-20 21:03:16"
+         },
+         {
+            "reviewId": "240a0658-dc5f-4878-9381-ebb7b2667772",
+            "eventAction": "MOD",
+            "changedMileage": -1,
+            "reason": "content",
+            "createdAt": "2022-12-20 21:03:13"
+         },
+         {
+            "reviewId": "240a0658-dc5f-4878-9381-ebb7b2667772",
+            "eventAction": "ADD",
+            "changedMileage": 3,
+            "reason": "new review",
+            "createdAt": "2022-12-20 21:02:57"
+         }
+      ]
+   }
+}
+```

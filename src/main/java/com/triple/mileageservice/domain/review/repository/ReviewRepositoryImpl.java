@@ -1,6 +1,7 @@
 package com.triple.mileageservice.domain.review.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.triple.mileageservice.domain.place.entity.Place;
 
 import javax.persistence.EntityManager;
 import java.util.UUID;
@@ -25,6 +26,17 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
                 .join(review.users, users)
                 .join(review.place, place)
                 .where(users.userId.eq(userId), place.placeId.eq(placeId), review.isDelete.isFalse())
+                .fetchFirst();
+
+        return null != result;
+    }
+
+    @Override
+    public boolean existsByPlace(Place place) {
+        Long result = queryFactory
+                .select(review.seqId)
+                .from(review)
+                .where(review.place.eq(place), review.isDelete.isFalse())
                 .fetchFirst();
 
         return null != result;

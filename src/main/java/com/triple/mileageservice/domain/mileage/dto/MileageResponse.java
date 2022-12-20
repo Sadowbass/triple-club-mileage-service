@@ -19,7 +19,7 @@ public class MileageResponse {
     public MileageResponse(UUID userId, Long numberOfReviews, Integer mileage) {
         this.userId = userId;
         this.numberOfReviews = numberOfReviews;
-        this.mileage = mileage;
+        this.mileage = null != mileage ? mileage : 0;
         this.detailPath = "/mileage/" + userId + "/details?pageNum=1";
     }
 }

@@ -11,8 +11,6 @@ import java.util.UUID;
 
 public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewRepositoryCustom {
 
-    boolean existsByPlace(Place place);
-
     boolean existsByReviewId(UUID reviewId);
 
     Optional<Review> findByReviewId(UUID reviewId);
