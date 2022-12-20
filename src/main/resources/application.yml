@@ -4,9 +4,6 @@ spring:
     username: root
     password:
     url: jdbc:mysql://localhost:3306/triple_mileage_db?rewriteBatchedStatements=true
-  h2:
-    console:
-      enabled: true
   jpa:
     database: mysql
     properties:
