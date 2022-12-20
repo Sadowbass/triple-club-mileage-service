@@ -1,6 +1,5 @@
 package com.triple.mileageservice.domain.review.repository;
 
-import com.triple.mileageservice.domain.place.entity.Place;
 import com.triple.mileageservice.domain.review.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,6 +17,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewRep
     @Query("select r from Review r join fetch r.users where r.seqId = :seqId")
     Optional<Review> findByIdUsingFetch(@Param("seqId") Long seqId);
 
-    @Query("select r from Review r join fetch r.users where r.reviewId = :reviewId")
+    @Query("select r from Review r join fetch r.users left join fetch r.photos where r.reviewId = :reviewId")
     Optional<Review> findByReviewIdUsingFetch(@Param("reviewId") UUID reviewId);
 }

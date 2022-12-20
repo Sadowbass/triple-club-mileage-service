@@ -93,6 +93,95 @@ class EventControllerTest {
 
     @Test
     @Transactional
+    void addReviewOtherUser() throws Exception {
+        //given
+        UUID userId = UUID.randomUUID();
+        usersRepository.save(new Users(userId));
+        UUID placeId = UUID.randomUUID();
+        placeRepository.save(new Place(placeId));
+        UUID reviewId = UUID.randomUUID();
+
+        addDefault(userId, placeId, reviewId);
+
+        //when
+        UUID newUserId = UUID.randomUUID();
+        usersRepository.save(new Users(newUserId));
+        UUID newReviewId = UUID.randomUUID();
+
+        EventRequest eventRequest = new EventRequest();
+        eventRequest.setUserId(newUserId);
+        eventRequest.setPlaceId(placeId);
+        eventRequest.setReviewId(newReviewId);
+        eventRequest.setContent("content");
+        eventRequest.setType(EventType.REVIEW);
+        eventRequest.setAction(EventAction.ADD);
+
+        Set<UUID> photos = new HashSet<>();
+        photos.add(UUID.randomUUID());
+        photos.add(UUID.randomUUID());
+        photos.add(UUID.randomUUID());
+        eventRequest.setAttachedPhotoIds(photos);
+
+        eventController.events(eventRequest);
+        em.flush();
+        em.clear();
+        //then
+        Review secondReview = reviewRepository.findByReviewId(newReviewId).orElseThrow();
+        assertThat(secondReview.isFirst()).isFalse();
+
+        Mileage mileage = mileageRepository.findByReview(secondReview).orElseThrow();
+        assertThat(mileage.getReviewMileage()).isEqualTo(2);
+    }
+
+    @Test
+    @Transactional
+    void addReviewAfterDelete() throws Exception {
+        //given
+        UUID userId = UUID.randomUUID();
+        usersRepository.save(new Users(userId));
+        UUID placeId = UUID.randomUUID();
+        placeRepository.save(new Place(placeId));
+        UUID reviewId = UUID.randomUUID();
+
+        addDefault(userId, placeId, reviewId);
+
+        //when
+        Review savedReview = reviewRepository.findByReviewId(reviewId).orElseThrow();
+        savedReview.deleteReview();
+        em.flush();
+        em.clear();
+
+        UUID newUserId = UUID.randomUUID();
+        usersRepository.save(new Users(newUserId));
+        UUID newReviewId = UUID.randomUUID();
+
+        EventRequest eventRequest = new EventRequest();
+        eventRequest.setUserId(newUserId);
+        eventRequest.setPlaceId(placeId);
+        eventRequest.setReviewId(newReviewId);
+        eventRequest.setContent("content");
+        eventRequest.setType(EventType.REVIEW);
+        eventRequest.setAction(EventAction.ADD);
+
+        Set<UUID> photos = new HashSet<>();
+        photos.add(UUID.randomUUID());
+        photos.add(UUID.randomUUID());
+        photos.add(UUID.randomUUID());
+        eventRequest.setAttachedPhotoIds(photos);
+
+        eventController.events(eventRequest);
+        em.flush();
+        em.clear();
+        //then
+        Review secondReview = reviewRepository.findByReviewId(newReviewId).orElseThrow();
+        assertThat(secondReview.isFirst()).isTrue();
+
+        Mileage mileage = mileageRepository.findByReview(secondReview).orElseThrow();
+        assertThat(mileage.getReviewMileage()).isEqualTo(3);
+    }
+
+    @Test
+    @Transactional
     void addReviewWithDuplicateReviewId() throws Exception {
         //given
         UUID userId = UUID.randomUUID();

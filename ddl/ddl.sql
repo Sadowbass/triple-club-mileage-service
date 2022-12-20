@@ -10,7 +10,7 @@ create table users
     user_id          binary(16) unique not null,
     created_at       datetime,
     last_modified_at datetime
-) engine=InnoDB;
+) engine = InnoDB;
 
 create table place
 (
@@ -18,7 +18,7 @@ create table place
     place_id         binary(16) unique not null,
     created_at       datetime,
     last_modified_at datetime
-) engine=InnoDB;
+) engine = InnoDB;
 
 create table review
 (
@@ -31,9 +31,12 @@ create table review
     is_delete        bit               not null,
     created_at       datetime,
     last_modified_at datetime
-) engine=InnoDB;
+) engine = InnoDB;
 alter table review
-    add index idx_review_user_place (user_seq_id, place_seq_id);
+    add index idx_review_place_user (place_seq_id, user_seq_id);
+alter table review
+    add index idx_review_user_seq_id_review_id (user_seq_id, review_id);
+
 
 create table review_photos
 (
@@ -42,7 +45,7 @@ create table review_photos
     photo_id         binary(16)   not null,
     created_at       datetime,
     last_modified_at datetime
-) engine=InnoDB;
+) engine = InnoDB;
 alter table review_photos
     add index idx_photos_review_seq_id (review_seq_id);
 
@@ -54,7 +57,7 @@ create table mileage
     review_mileage   tinyint             not null,
     created_at       datetime,
     last_modified_at datetime
-) engine=InnoDB;
+) engine = InnoDB;
 alter table mileage
     add index idx_mileage_user_seq_id (user_seq_id);
 
@@ -69,7 +72,7 @@ create table mileage_detail
     reason           varchar(20),
     created_at       datetime,
     last_modified_at datetime
-) engine=InnoDB;
+) engine = InnoDB;
 alter table mileage_detail
     add index idx_mileage_detail_mileage_seq_id (mileage_seq_id);
 

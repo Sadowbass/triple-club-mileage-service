@@ -11,7 +11,6 @@ import com.triple.mileageservice.domain.mileage.util.MileageCalculator;
 import com.triple.mileageservice.domain.review.entity.Review;
 import com.triple.mileageservice.domain.review.repository.ReviewRepository;
 import com.triple.mileageservice.domain.user.entity.Users;
-import com.triple.mileageservice.domain.user.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
