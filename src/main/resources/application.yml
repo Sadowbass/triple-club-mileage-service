@@ -14,9 +14,9 @@ spring:
 decorator:
   datasource:
     p6spy:
-      enable-logging: true
+      enable-logging: false
 
 logging:
   level:
-    root: info
+    root: error
     com.triple.mileageservice: info
