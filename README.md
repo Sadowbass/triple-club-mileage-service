@@ -16,7 +16,9 @@
    > spring-boot-starter-aop
 3. MySql 5.7.39  
 4. QueryDSL-JPA 5.0.0  
+
 <br>  
+
 ## 실행 방법  
 1. src/main/resources/application.yml 파일을 설정합니다  
    1. 채용팀 담당자님께서 확인은 로컬DB로 하신다고 하시어 별도 인증서 및 연결 설정은 되어있지 않습니다.  
