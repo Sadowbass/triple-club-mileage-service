@@ -29,6 +29,6 @@
    1. Mac
       ![Mac Example](https://github.com/Sadowbass/triple-club-mileage-service/blob/main/images/run_mac.png)
    2. Linux (Ubuntu 16(Azure vm))
-      ![Linux Example](https://github.com/Sadowbass/triple-club-mileage-service/blob/main/images/run_linux.png)
+      ![Linux Example](https://github.com/Sadowbass/triple-club-mileage-service/blob/main/images/run_ubuntu.png)
    3. Windows 11
       ![Window Example](https://github.com/Sadowbass/triple-club-mileage-service/blob/main/images/run_window.png)
