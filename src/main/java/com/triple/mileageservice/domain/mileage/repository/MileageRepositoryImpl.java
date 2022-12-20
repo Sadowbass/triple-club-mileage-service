@@ -33,7 +33,7 @@ public class MileageRepositoryImpl implements MileageRepositoryCustom {
                 .from(users)
                 .leftJoin(review).on(review.users.eq(users))
                 .leftJoin(mileage).on(mileage.review.eq(review))
-                .where(userIdEq(userId))
+                .where(userIdEq(userId), review.isDelete.isFalse())
                 .fetchOne();
     }
 

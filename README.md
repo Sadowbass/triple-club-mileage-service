@@ -3,8 +3,8 @@
 1. [개발 및 실행 환경](#개발-및-실행-환경)
 2. [실행 방법](#실행-방법)
 3. [설계 및 개발 의도](#설계-및-개발-의도)
-4. [API 명세서](API-명세서)
-5. [애플리케이션내에서 발생하는 쿼리와 추가로 고려해볼 Index](애플리케이션내에서-발생하는-쿼리와-추가로-고려해볼-Index)
+4. [API 명세서](#API-명세서)
+5. [애플리케이션내에서 발생하는 쿼리와 추가로 고려해볼 Index](#애플리케이션내에서-발생하는-쿼리와-추가로-고려해볼-Index)
 
 <br>
 
@@ -54,3 +54,36 @@
 <br>
 
 ## API 명세서
+
+### `POST /events`
+#### 리뷰를 작성이 이뤄질때마다 발생하는 API입니다.
+
+| Method | Path    | Content-Type     |
+| :----: | :---:   | :----------:     |
+| POST   | /events | application/json |  
+ 
+`Request Data`
+
+| field name       | type       | required | values           | description                                 | 
+| :----:           | :----:     | :----:   | :----:           | :-----:                                     |
+| type             | string     | true     | REVIEW           | 이벤트의 종류를 정합니다                    |
+| action           | string     | true     | ADD, MOD, DELETE | 이벤트의 동작을 정합니다                    |
+| reviewId         | UUID       | true     | -                | 해당 리뷰의 UUID 형식의 ID입니다            |
+| content          | string     | false    | -                | 리뷰의 내용입니다                           |
+| attachedPhotoIds | list<UUID> | false    | -                | 리뷰에 포함된 사진들의 UUID 형식의 ID입니다 |
+| userId           | UUID       | true     | -                | 리뷰를 작성한 사용자의 UUID 형식의 ID입니다 |
+| placeId          | UUID       | true     | -                | 리뷰를 작성한 장소의 UUID 형식의 ID입니다   |
+
+`Response Data`  
+
+| field name        | type       | required | values           | description                                        |
+| :----:            | :----:     | :----:   | :----:           | :-----:                                            |
+| rspCode           | number     | true     | -                | 응답상태에 대한 코드입니다                         |
+| rspMessage        | string     | true     | -                | 응답상태에 대한 메세지 입니다                      |
+| result            | object     | true     | -                | 사용자의 마일리지 정보를 담은 object 입니다        |       
+| * userId          | UUID       | true     | -                | 사용자의 UUID 형식의 ID입니다                      |
+| * numberOfReviews | number     | true     | -                | 사용자가 작성한 리뷰의 숫자입니다                  |       
+| * mileage         | number     | true     | -                | 사용자의 현재 총 마일리지입니다                    |
+| * detailPath      | URI        | true     | -                | 사용자 마일리지 상세항목을 요청하는 API 경로입니다 |
+
+
