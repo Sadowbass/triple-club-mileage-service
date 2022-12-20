@@ -19,7 +19,7 @@ public enum ResponseCodes {
     WRONG_REQUIRED_VALUE(22, "Wrong required value. field : %s", HttpStatus.BAD_REQUEST),
     WRONG_REQUEST_MESSAGE(23, "Wrong request message", HttpStatus.BAD_REQUEST),
 
-    INTERNAL_SERVER_ERROR(99, "internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
+    INTERNAL_SERVER_ERROR(99, "Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
 
     private final int rspCode;
     private final String rspMessage;
