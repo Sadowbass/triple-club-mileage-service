@@ -24,4 +24,5 @@
    1. 채용팀 담당자님께서 확인은 로컬DB로 하신다고 하시어 별도 인증서 및 연결 설정은 되어있지 않습니다.  
    2. spring.datasource.username, password, url에 db 연결정보를 입력합니다.  
    3. 로그는 실행 환경이 각각 다름으로 logback.xml로 별도 file-appender등을 설정하지 않고 콘솔에 출력합니다  
-2. {project-root}/ddl/ddl.sql을 이용하여 테이블 및 기본 user와 place를 등록합니다.  
+2. {project-root}/ddl/ddl.sql을 이용하여 테이블 및 기본 user와 place를 등록합니다.
+3. 
