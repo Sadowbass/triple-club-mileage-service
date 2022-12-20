@@ -25,4 +25,10 @@
    2. spring.datasource.username, password, url에 db 연결정보를 입력합니다.  
    3. 로그는 실행 환경이 각각 다름으로 logback.xml로 별도 file-appender등을 설정하지 않고 콘솔에 출력합니다  
 2. {project-root}/ddl/ddl.sql을 이용하여 테이블 및 기본 user와 place를 등록합니다.
-3. 
+3. Mac, Linux, Window 셋의 모든 로컬환경 실행은 gradlew bootRun으로 수행합니다.
+   1. Mac
+      ![Mac Example](https://github.com/Sadowbass/triple-club-mileage-service/blob/main/images/run_mac.png)
+   2. Linux (Ubuntu 16(Azure vm))
+      ![Linux Example](https://github.com/Sadowbass/triple-club-mileage-service/blob/main/images/run_linux.png)
+   3. Windows 11
+      ![Window Example](https://github.com/Sadowbass/triple-club-mileage-service/blob/main/images/run_window.png)
