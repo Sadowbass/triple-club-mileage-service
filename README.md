@@ -192,9 +192,9 @@
 
 | param type    | field name       | type       | required | values           | description                                        | 
 | :--------:    | :----:           | :----:     | :----:   | :----:           | :-----:                                            |
-| path variable | userId           | UUID       | true     | -                | 사용자의 UUID 형식의 ID입니다           |
-| URL parameter | pageNum          | number     | false    | -                | 상세확인 페이지 번호입니다. (기본값 1)  |
-| URL parameter | order            | string     | false    | asc, desc        | 등록일자 정렬방식입니다. (기본값 desc)  |
+| path variable | userId           | UUID       | true     | -                | 사용자의 UUID 형식의 ID입니다                 |
+| URL parameter | pageNum          | number     | false    | -                | 상세확인 페이지 번호입니다. (기본값 1)        |
+| URL parameter | order            | string     | false    | `asc`, `desc`    | 오름차, 내림자 정렬방식입니다. (기본값 desc)  |
 
 `Response Data (success)`
 
