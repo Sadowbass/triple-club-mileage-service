@@ -65,15 +65,15 @@
 
 `Request Data (HTTP body)`
 
-| field name       | data type  | required | values           | description                                 | 
-| :----:           | :----:     | :----:   | :----:           | :-----:                                     |
-| type             | string     | true     | REVIEW           | 이벤트의 종류를 정합니다                    |
-| action           | string     | true     | ADD, MOD, DELETE | 이벤트의 동작을 정합니다                    |
-| reviewId         | UUID       | true     | -                | 해당 리뷰의 UUID 형식의 ID입니다            |
-| content          | string     | false    | -                | 리뷰의 내용입니다                           |
-| attachedPhotoIds | list<UUID> | false    | -                | 리뷰에 포함된 사진들의 UUID 형식의 ID입니다 |
-| userId           | UUID       | true     | -                | 리뷰를 작성한 사용자의 UUID 형식의 ID입니다 |
-| placeId          | UUID       | true     | -                | 리뷰를 작성한 장소의 UUID 형식의 ID입니다   |
+| param type | field name       | data type  | required | values                 | description                                 | 
+| :--------: | :----:           | :----:     | :----:   | :----:                 | :-----:                                     |
+| body       | type             | string     | true     | `REVIEW`               | 이벤트의 종류입니다                         |
+| body       | action           | string     | true     | `ADD`, `MOD`, `DELETE` | 이벤트의 동작입니다                         |
+| body       | reviewId         | UUID       | true     | -                      | 해당 리뷰의 UUID 형식의 ID입니다            |
+| body       | content          | string     | false    | -                      | 리뷰의 내용입니다                           |
+| body       | attachedPhotoIds | list<UUID> | false    | -                      | 리뷰에 포함된 사진들의 UUID 형식의 ID입니다 |
+| body       | userId           | UUID       | true     | -                      | 리뷰를 작성한 사용자의 UUID 형식의 ID입니다 |
+| body       | placeId          | UUID       | true     | -                      | 리뷰를 작성한 장소의 UUID 형식의 ID입니다   |
 
 `Response Data (success)`
 
@@ -85,9 +85,9 @@
 | * userId          | UUID       | true     | 사용자의 UUID 형식의 ID입니다                      |
 | * numberOfReviews | number     | true     | 사용자가 작성한 리뷰의 숫자입니다                  |       
 | * mileage         | number     | true     | 사용자의 현재 총 마일리지입니다                    |
-| * detailPath      | URI        | true     | 사용자 마일리지 상세항목을 요청하는 API 경로입니다 |
+| * detailPath      | URI        | true     | 사용자 마일리지 상세정보를 요청하는 API 경로입니다 |
 
-`Response Data (Failed)`
+`Response Data (error)`
 
 | field name        | type       | required | description                                        |
 | :----:            | :----:     | :----:   | :-----:                                            |
@@ -138,9 +138,9 @@
 
 `Request Data`
 
-| field name       | type       | required | values           | description                                 | 
-| :----:           | :----:     | :----:   | :----:           | :-----:                                     |
-| userId           | UUID       | true     | -                | 사용자의 UUID 형식의 ID입니다 (path var)    |
+| param type    | field name       | type       | required | values           | description                                 | 
+| :--------:    | :----:           | :----:     | :----:   | :----:           | :-----:                                     |
+| path variable | userId           | UUID       | true     | -                | 사용자의 UUID 형식의 ID입니다 (path var)    |
 
 `Response Data (success)`
 
@@ -154,7 +154,7 @@
 | * mileage         | number     | true     | 사용자의 현재 총 마일리지입니다                    |
 | * detailPath      | URI        | true     | 사용자 마일리지 상세항목을 요청하는 API 경로입니다 |
 
-`Response Data (Failed)`
+`Response Data (error)`
 
 | field name        | type       | required | description                                        |
 | :----:            | :----:     | :----:   | :-----:                                            |
@@ -184,17 +184,17 @@
 
 #### 사용자의 마일리지 적립 이력을 조회합니다 (삭제한 리뷰의 마일리지 이력 포함)
 
-| Method | Path                      | Content-Type     |
-| :----: | :---:                     | :----------:     |
-| GET    | /mileage/{userId}/details | -                |
+| Method | Path                      | Content-Type |
+| :----: | :---:                     | :----------: |
+| GET    | /mileage/{userId}/details | -            |
 
 `Request Data`
 
-| field name       | type       | required | values           | description                                        | 
-| :----:           | :----:     | :----:   | :----:           | :-----:                                            |
-| userId           | UUID       | true     | -                | 사용자의 UUID 형식의 ID입니다 (path var)           |
-| pageNum          | number     | false    | -                | 상세확인 페이지 번호입니다. (parameter, 기본값 1)  |
-| order            | string     | false    | asc, desc        | 등록일자 정렬방식입니다. (parameter, 기본값 desc)  |
+| param type    | field name       | type       | required | values           | description                                        | 
+| :--------:    | :----:           | :----:     | :----:   | :----:           | :-----:                                            |
+| path variable | userId           | UUID       | true     | -                | 사용자의 UUID 형식의 ID입니다           |
+| URL parameter | pageNum          | number     | false    | -                | 상세확인 페이지 번호입니다. (기본값 1)  |
+| URL parameter | order            | string     | false    | asc, desc        | 등록일자 정렬방식입니다. (기본값 desc)  |
 
 `Response Data (success)`
 
@@ -214,7 +214,7 @@
 | ** reason         | string       | true     | 변동된 사유입니다                                  |
 | ** createdAt      | datetime     | true     | 변동된 일시입니다.                                 |
 
-`Response Data (Failed)`
+`Response Data (error)`
 
 | field name        | type       | required | description                                        |
 | :----:            | :----:     | :----:   | :-----:                                            |
@@ -344,7 +344,7 @@
 | 99    | Internal server error                              | 500         | 처리중 내부 서버에러입니다 로그를 확인하세요    |
 
 ### 테스트용 API
-#### 이하 API들은 실제 적용이나 과제 주제에 관련된 API가 아닌 과제를 확인 하시는분들께서 테스트를 더 편리하게 하실수 있도록 구현한 API입니다.  
+#### 이하 API들은 과제 주제에 관련된 API가 아닌 과제를 확인 하시는분들께서 테스트를 더 편리하게 하실수 있도록 구현한 API입니다.  
 
 ### `POST /test/user`
 #### 과제 문서에 나와있는 유저 외의 유저를 추가 할 수 있습니다.
