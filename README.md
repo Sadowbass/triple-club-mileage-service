@@ -335,11 +335,11 @@
 | 12    | Cannot find place. placeId : {placeId}             | 400         | 요청한 장소 Id가 없습니다                       |
 | 13    | Cannot find review. review Id : {reviewId}         | 400         | 수정, 삭제시 요청한 리뷰 Id가 없습니다          |    
 | 14    | User already review this place. {userId} {placeId} | 400         | 해당 장소에 이미 사용자가 리뷰를 하였습니다     |    
-| 15    | Duplicated review id. {reviewId}                   | 400         | 신규 리뷰 등록시 리뷰 Id가 중복입니다           |    
+| 15    | Duplicated review id. {reviewId}                   | 400         | 이미 존재하는 리뷰 Id로 요청을 하였습니다           |    
 | 16    | User and reviewed user are different               | 400         | 리뷰를 작성한 사용자와 요청한 사용자가 다릅니다 |
 | 17    | Review already deleted                             | 400         | 이미 삭제된 리뷰를 삭제 요청 하였습니다         |
 | 21    | Empty required field. field : {fieldName}          | 400         | 필수값 필드가 누락되었습니다                    |
-| 22    | Wrong required value. field : {fieldName}          | 400         | 형태 혹은 사용 할 수 없는값을 요청하였습니다    |
+| 22    | Wrong required value. field : {fieldName}          | 400         | 타입 혹은 사용 할 수 없는값을 요청하였습니다    |
 | 23    | Wrong request message                              | 400         | 요청 메세지 포멧이 잘못되었습니다               |
 | 99    | Internal server error                              | 500         | 처리중 내부 서버에러입니다 로그를 확인하세요    |
 
