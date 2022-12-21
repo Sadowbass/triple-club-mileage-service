@@ -1,5 +1,6 @@
 package com.triple.mileageservice.domain.review.repository;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.triple.mileageservice.domain.place.entity.Place;
 
@@ -25,7 +26,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
                 .from(review)
                 .join(review.users, users)
                 .join(review.place, place)
-                .where(users.userId.eq(userId), place.placeId.eq(placeId), review.isDelete.isFalse())
+                .where(allEq(userId, placeId), notDeleted())
                 .fetchFirst();
 
         return null != result;
@@ -36,9 +37,25 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
         Long result = queryFactory
                 .select(review.seqId)
                 .from(review)
-                .where(review.place.eq(place), review.isDelete.isFalse())
+                .where(review.place.eq(place), notDeleted())
                 .fetchFirst();
 
         return null != result;
+    }
+
+    private BooleanExpression allEq(UUID userId, UUID placeId) {
+        return userIdEq(userId).and(placeIdEq(placeId));
+    }
+
+    private BooleanExpression userIdEq(UUID userId) {
+        return users.userId.eq(userId);
+    }
+
+    private BooleanExpression placeIdEq(UUID placeId) {
+        return place.placeId.eq(placeId);
+    }
+
+    private BooleanExpression notDeleted() {
+        return review.isDelete.isFalse();
     }
 }

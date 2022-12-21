@@ -4,6 +4,7 @@ import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
@@ -19,7 +20,7 @@ public class MileageResponse {
     public MileageResponse(UUID userId, Long numberOfReviews, Integer mileage) {
         this.userId = userId;
         this.numberOfReviews = numberOfReviews;
-        this.mileage = null != mileage ? mileage : 0;
+        this.mileage = !Objects.isNull(mileage) ? mileage : 0;
         this.detailPath = "/mileage/" + userId + "/details?pageNum=1";
     }
 }

@@ -82,4 +82,3 @@ values (unhex('3ede0ef292b74817a5f30c575361f745'), sysdate(), sysdate());
 
 insert into place(place_id, created_at, last_modified_at)
 values (unhex('2e4baf1c5acb4efba1afeddada31b00f'), sysdate(), sysdate());
-

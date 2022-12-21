@@ -38,6 +38,16 @@ public class MileageDetail extends BaseEntity {
     private Integer changedMileage;
     private String reason;
 
+    public static MileageDetail createNewMileageDetail(Users user, Review review, Mileage mileage, int changedMileage, MileageEvent mileageEvent) {
+        return MileageDetail.builder()
+                .users(user)
+                .review(review)
+                .mileage(mileage)
+                .changedMileage(changedMileage)
+                .mileageEvent(mileageEvent)
+                .build();
+    }
+
     @Builder
     private MileageDetail(Users users, Review review, Mileage mileage, int changedMileage, MileageEvent mileageEvent) {
         this.users = users;

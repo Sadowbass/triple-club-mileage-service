@@ -16,9 +16,7 @@ public class EventResponse {
     private Object result;
 
     public EventResponse(int rspCode, String rspMessage) {
-        this.rspCode = rspCode;
-        this.rspMessage = rspMessage;
-        this.result = null;
+        this(rspCode, rspMessage, null);
     }
 
     public EventResponse(ResponseCodes responseCodes, Object result) {

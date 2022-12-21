@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -24,6 +26,12 @@ public class ReviewPhotos extends BaseEntity {
 
     @Column(columnDefinition = "BINARY(16)")
     private UUID photoId;
+
+    public static Set<ReviewPhotos> createReviewPhotoFromUUID(Set<UUID> attachedPhotoIds) {
+        return attachedPhotoIds.stream()
+                .map(ReviewPhotos::new)
+                .collect(Collectors.toSet());
+    }
 
     public ReviewPhotos(UUID photoId) {
         this.photoId = photoId;

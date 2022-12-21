@@ -2,10 +2,11 @@ package com.triple.mileageservice.controller.dtos;
 
 import com.triple.mileageservice.common.EventAction;
 import com.triple.mileageservice.common.EventType;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -31,9 +32,5 @@ public class EventRequest {
         this.attachedPhotoIds = attachedPhotoIds;
         this.userId = userId;
         this.placeId = placeId;
-    }
-
-    public Set<UUID> getAttachedPhotoIds() {
-        return Objects.requireNonNullElseGet(this.attachedPhotoIds, HashSet::new);
     }
 }

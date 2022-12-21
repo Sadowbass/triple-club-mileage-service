@@ -28,9 +28,9 @@ public class MileageCommandService implements MileageService {
     public MileageResponse doMileageEvent(MileageEvent mileageEvent) {
         EventAction eventAction = mileageEvent.getEventAction();
 
-        if (isAdd(eventAction)) {
+        if (EventAction.isAdd(eventAction)) {
             return addMileage(mileageEvent);
-        } else if (isMod(eventAction) || isDelete(eventAction)) {
+        } else if (EventAction.isMod(eventAction) || EventAction.isDelete(eventAction)) {
             return modOrDeleteMileage(mileageEvent);
         } else {
             throw new UnsupportedOperationException(
@@ -45,9 +45,9 @@ public class MileageCommandService implements MileageService {
 
         int reviewMileage = MileageCalculator.calcAdd(mileageEvent);
         Mileage mileage = new Mileage(user, review, reviewMileage);
-        MileageDetail mileageDetail = createNewMileageDetail(user, review, mileage, reviewMileage, mileageEvent);
-
         mileageRepository.save(mileage);
+
+        MileageDetail mileageDetail = MileageDetail.createNewMileageDetail(user, review, mileage, reviewMileage, mileageEvent);
         detailRepository.save(mileageDetail);
 
         return mileageRepository.queryUserMileage(user.getUserId());
@@ -64,27 +64,11 @@ public class MileageCommandService implements MileageService {
             Mileage mileage = findMileageByReview(review);
             mileage.changeMileage(changedMileage);
 
-            MileageDetail mileageDetail = createNewMileageDetail(user, review, mileage, changedMileage, mileageEvent);
+            MileageDetail mileageDetail = MileageDetail.createNewMileageDetail(user, review, mileage, changedMileage, mileageEvent);
             detailRepository.save(mileageDetail);
         }
 
         return mileageRepository.queryUserMileage(user.getUserId());
-    }
-
-    private boolean isAdd(EventAction eventAction) {
-        return typeOf(eventAction, EventAction.ADD);
-    }
-
-    private boolean isMod(EventAction eventAction) {
-        return typeOf(eventAction, EventAction.MOD);
-    }
-
-    private boolean isDelete(EventAction eventAction) {
-        return typeOf(eventAction, EventAction.DELETE);
-    }
-
-    private boolean typeOf(EventAction requestAction, EventAction expectAction) {
-        return requestAction == expectAction;
     }
 
     private Review findReviewByReviewSeqFetch(Long reviewSeqId) {
@@ -98,16 +82,6 @@ public class MileageCommandService implements MileageService {
                 .orElseThrow(() -> new IllegalArgumentException(
                         String.format("cannot find mileage by review : %s", review.getReviewId()))
                 );
-    }
-
-    private MileageDetail createNewMileageDetail(Users user, Review review, Mileage mileage, int changedMileage, MileageEvent mileageEvent) {
-        return MileageDetail.builder()
-                .users(user)
-                .review(review)
-                .mileage(mileage)
-                .changedMileage(changedMileage)
-                .mileageEvent(mileageEvent)
-                .build();
     }
 
     private boolean isChange(int changedMileage) {

@@ -1,6 +1,7 @@
 package com.triple.mileageservice.domain.review.entity;
 
 import com.triple.mileageservice.common.entity.BaseEntity;
+import com.triple.mileageservice.controller.dtos.EventRequest;
 import com.triple.mileageservice.domain.place.entity.Place;
 import com.triple.mileageservice.domain.user.entity.Users;
 import lombok.AccessLevel;
@@ -38,12 +39,21 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "placeSeqId")
     private Place place;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "review")
+    @OneToMany(mappedBy = "review", cascade = CascadeType.PERSIST)
     private Set<ReviewPhotos> photos = new HashSet<>();
 
     private boolean isFirst = false;
 
     private boolean isDelete = false;
+
+    public static Review createNewReview(EventRequest eventRequest, Users user, Place place) {
+        return Review.builder()
+                .reviewId(eventRequest.getReviewId())
+                .content(eventRequest.getContent())
+                .users(user)
+                .place(place)
+                .build();
+    }
 
     @Builder
     private Review(UUID reviewId, String content, Users users, Place place) {
@@ -53,25 +63,35 @@ public class Review extends BaseEntity {
         this.place = place;
     }
 
-    public void modifyReview(String content, Set<ReviewPhotos> photos) {
+    public void changeContent(String content) {
         this.content = content;
-        changePhotos(photos);
     }
 
-    public void changePhotos(Set<ReviewPhotos> newPhotos) {
-        Set<ReviewPhotos> removeTarget = this.photos.stream()
-                .filter(reviewPhotos -> !newPhotos.contains(reviewPhotos))
-                .collect(Collectors.toSet());
-        this.photos.removeAll(removeTarget);
+    public void deleteReview() {
+        this.isDelete = true;
+    }
 
+    public void addPhotos(Set<ReviewPhotos> newPhotos) {
         newPhotos.forEach(newPhoto -> {
             newPhoto.setReview(this);
             this.photos.add(newPhoto);
         });
     }
 
-    public void deleteReview() {
-        this.isDelete = true;
+    public void mergePhotos(Set<ReviewPhotos> newPhotos) {
+        Set<ReviewPhotos> insertTargets = newPhotos.stream()
+                .filter(photo -> !photos.contains(photo))
+                .collect(Collectors.toSet());
+        addPhotos(insertTargets);
+    }
+
+    public Set<ReviewPhotos> deletePhotosAndGetTargetPhotos(Set<ReviewPhotos> newPhotos) {
+        Set<ReviewPhotos> deleteTarget = photos.stream()
+                .filter(photo -> !newPhotos.contains(photo))
+                .collect(Collectors.toSet());
+        photos.removeAll(deleteTarget);
+
+        return deleteTarget;
     }
 
     public void setFirst(boolean isFirst) {

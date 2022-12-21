@@ -1,6 +1,6 @@
 package com.triple.mileageservice.controller.dtos;
 
-import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.triple.mileageservice.common.EventAction;
 import com.triple.mileageservice.common.EventType;
@@ -36,7 +36,11 @@ public class EventRequestArgumentResolver implements HandlerMethodArgumentResolv
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+    public Object resolveArgument(
+            MethodParameter parameter,
+            ModelAndViewContainer mavContainer,
+            NativeWebRequest webRequest,
+            WebDataBinderFactory binderFactory) throws Exception {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         ObjectMapper om = new ObjectMapper();
         String requestBody = StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8);
@@ -44,7 +48,7 @@ public class EventRequestArgumentResolver implements HandlerMethodArgumentResolv
         try {
             return om.readValue(requestBody, TempEventRequest.class)
                     .toEventRequest();
-        } catch (JsonParseException ex) {
+        } catch (JacksonException ex) {
             log.error("parse failed. check request message : {}", requestBody);
             throw new TripleApiException(
                     ResponseCodes.WRONG_REQUEST_MESSAGE.getRspCode(),

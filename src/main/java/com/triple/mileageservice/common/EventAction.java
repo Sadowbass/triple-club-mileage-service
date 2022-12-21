@@ -12,4 +12,20 @@ public enum EventAction {
             throw new WrongRequiredValueException("action");
         }
     }
+
+    public static boolean isAdd(EventAction eventAction) {
+        return typeOf(eventAction, EventAction.ADD);
+    }
+
+    public static boolean isMod(EventAction eventAction) {
+        return typeOf(eventAction, EventAction.MOD);
+    }
+
+    public static boolean isDelete(EventAction eventAction) {
+        return typeOf(eventAction, EventAction.DELETE);
+    }
+
+    public static boolean typeOf(EventAction requestAction, EventAction expectAction) {
+        return requestAction == expectAction;
+    }
 }
