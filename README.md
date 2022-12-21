@@ -31,7 +31,7 @@
     1. 대부분의 설정은 1번과 동일하나 기본적으로 hibernate의 ddl-auto가 create로 설정되어있어 빌드때마다 테스트 코드가 자동으로 실행되며 테스트 db의 스키마를 건드리게 됨으로 원치 않을경우
        ddl-auto를 none으로 바꾸어야 합니다
 3. {project-root}/ddl/ddl.sql을 이용하여 테이블 및 기본 user와 place를 등록합니다.
-4. Mac, Linux, Window 셋의 모든 로컬환경 실행은 `gradlew bootRun`으로 수행합니다.
+4. Mac, Linux, Window 셋 모 로컬환경 실행은 `gradlew bootRun`으로 수행합니다.
     1. Mac
        ![Mac Example](https://github.com/Sadowbass/triple-club-mileage-service/blob/main/images/run_mac.png)
     2. Linux (Ubuntu 16(Azure vm))
