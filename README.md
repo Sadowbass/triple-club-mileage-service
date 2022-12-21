@@ -60,13 +60,13 @@
 #### 리뷰 작성이 이뤄질때마다 발생하는 API 입니다.
 
 | Method | Path    | Content-Type     |
-| :----: | :---:   | :----------:     |
+| :----  | :----   | :----------      |
 | POST   | /events | application/json |  
 
 `Request Data (HTTP body)`
 
 | param type | field name       | data type  | required | values                 | description                                 | 
-| :--------: | :----:           | :----:     | :----:   | :----:                 | :-----:                                     |
+| :--------  | :----            | :----      | :----    | :----                  | :-----                                     |
 | body       | type             | string     | true     | `REVIEW`               | 이벤트의 종류입니다                         |
 | body       | action           | string     | true     | `ADD`, `MOD`, `DELETE` | 이벤트의 동작입니다                         |
 | body       | reviewId         | UUID       | true     | -                      | 해당 리뷰의 UUID 형식의 ID입니다            |
@@ -78,7 +78,7 @@
 `Response Data (success)`
 
 | field name        | type       | required | description                                        |
-| :----:            | :----:     | :----:   | :-----:                                            |
+| :----             | :----      | :----    | :-----                                             |
 | rspCode           | number     | true     | 응답상태에 대한 코드입니다                         |
 | rspMessage        | string     | true     | 응답상태에 대한 메세지 입니다                      |
 | result            | object     | true     | 사용자의 마일리지 정보를 담은 object 입니다        |       
@@ -90,7 +90,7 @@
 `Response Data (error)`
 
 | field name        | type       | required | description                                        |
-| :----:            | :----:     | :----:   | :-----:                                            |
+| :----             | :----      | :----    | :-----                                             |
 | rspCode           | number     | true     | 응답상태에 대한 코드입니다                         |
 | rspMessage        | string     | true     | 응답상태에 대한 메세지 입니다                      |
 
@@ -133,19 +133,19 @@
 #### 사용자의 현재 보유중인 총 마일리지를 조회합니다.
 
 | Method | Path              | Content-Type     |
-| :----: | :---:             | :----------:     |
+| :----  | :---              | :----------      |
 | GET    | /mileage/{userId} | -                |  
 
 `Request Data`
 
 | param type    | field name       | type       | required | values           | description                                 | 
-| :--------:    | :----:           | :----:     | :----:   | :----:           | :-----:                                     |
+| :--------     | :----            | :----      | :----    | :----            | :-----                                      |
 | path variable | userId           | UUID       | true     | -                | 사용자의 UUID 형식의 ID입니다 (path var)    |
 
 `Response Data (success)`
 
 | field name        | type       | required | description                                        |
-| :----:            | :----:     | :----:   | :-----:                                            |
+| :----             | :----      | :----    | :-----                                             |
 | rspCode           | number     | true     | 응답상태에 대한 코드입니다                         |
 | rspMessage        | string     | true     | 응답상태에 대한 메세지 입니다                      |
 | result            | object     | true     | 사용자의 마일리지 정보를 담은 object 입니다        |       
@@ -157,7 +157,7 @@
 `Response Data (error)`
 
 | field name        | type       | required | description                                        |
-| :----:            | :----:     | :----:   | :-----:                                            |
+| :----             | :----      | :----    | :-----                                             |
 | rspCode           | number     | true     | 응답상태에 대한 코드입니다                         |
 | rspMessage        | string     | true     | 응답상태에 대한 메세지 입니다                      |
 
@@ -185,13 +185,13 @@
 #### 사용자의 마일리지 적립 이력을 조회합니다 (삭제한 리뷰의 마일리지 이력 포함)
 
 | Method | Path                      | Content-Type |
-| :----: | :---:                     | :----------: |
+| :----  | :---                      | :----------  |
 | GET    | /mileage/{userId}/details | -            |
 
 `Request Data`
 
 | param type    | field name       | type       | required | values           | description                                        | 
-| :--------:    | :----:           | :----:     | :----:   | :----:           | :-----:                                            |
+| :--------     | :----            | :----      | :----    | :----            | :-----                                             |
 | path variable | userId           | UUID       | true     | -                | 사용자의 UUID 형식의 ID입니다                 |
 | URL parameter | pageNum          | number     | false    | -                | 상세확인 페이지 번호입니다. (기본값 1)        |
 | URL parameter | order            | string     | false    | `asc`, `desc`    | 오름차, 내림자 정렬방식입니다. (기본값 desc)  |
@@ -199,7 +199,7 @@
 `Response Data (success)`
 
 | field name        | type         | required | description                                        |
-| :----:            | :----:       | :----:   | :-----:                                            |
+| :----             | :----        | :----    | :-----                                             |
 | rspCode           | number       | true     | 응답상태에 대한 코드입니다                         |
 | rspMessage        | string       | true     | 응답상태에 대한 메세지 입니다                      |
 | result            | object       | true     | 사용자의 마일리지 상세 정보를 담은 object 입니다   |       
@@ -217,7 +217,7 @@
 `Response Data (error)`
 
 | field name        | type       | required | description                                        |
-| :----:            | :----:     | :----:   | :-----:                                            |
+| :----             | :----      | :----    | :-----                                             |
 | rspCode           | number     | true     | 응답상태에 대한 코드입니다                         |
 | rspMessage        | string     | true     | 응답상태에 대한 메세지 입니다                      |
 
@@ -322,14 +322,14 @@
 ### 응답코드
 
 | code  | description                                                              |
-| :---: | :---------:                                                              |
+| :---  | :---------                                                               |
 | 0     | 정상입니다                                                               |
 | 10~19 | 요청 메세지는 정상이나 처리중 문제가 발생하는 요청값들에 대한 에러입니다 |
 | 20~29 | 요청 메세지 자체의 에러입니다                                            |
 | 99    | 처리중 발생한 내부 에러로 인한 응답입니다. 로그를 확인하세요             |
 
 | code  | message                                            | http status | description                                     |
-| :---: | :-----:                                            | :---------: | :---------:                                     | 
+| :---  | :-----                                             | :---------  | :---------                                      | 
 | 0     | Request Success.                                   | 200         | 요청이 정상처리 되었습니다                      |       
 | 11    | Cannot find user. userId : {userId}                | 400         | 요청한 사용자 Id가 없습니다                     |
 | 12    | Cannot find place. placeId : {placeId}             | 400         | 요청한 장소 Id가 없습니다                       |
@@ -350,13 +350,13 @@
 #### 과제 문서에 나와있는 유저 외의 유저를 추가 할 수 있습니다.
 
 | Method | Path                      | Content-Type     |
-| :----: | :---:                     | :----------:     |
+| :----  | :---                      | :----------      |
 | POST   | /test/user                | text/html        |
 
 `Request Data`
 
 | field name       | type       | required | values           | description                                                     | 
-| :----:           | :----:     | :----:   | :----:           | :-----:                                                         |
+| :----            | :----      | :----    | :----            | :-----                                                          |
 | -                | UUID       | true     | -                | 추가할 사용자 Id입니다. post body에 따옴표, 공백없이 UUID만 입력해 주세요   |
 
 `Request Example`  
@@ -366,13 +366,13 @@
 #### 과제 문서에 나와있는 장소 외의 장소를 추가 할 수 있습니다.
 
 | Method | Path                      | Content-Type     |
-| :----: | :---:                     | :----------:     |
+| :----  | :----                     | :----------      |
 | POST   | /test/user                | text/html        |
 
 `Request Data`
 
 | field name       | type       | required | values           | description                                                     | 
-| :----:           | :----:     | :----:   | :----:           | :-----:                                                         |
+| :----            | :----      | :----    | :----            | :-----                                                          |
 | -                | UUID       | true     | -                | 추가할 장소 Id입니다. post body에 따옴표, 공백없이 UUID만 입력해 주세요     |
 
 `Request Example`  
